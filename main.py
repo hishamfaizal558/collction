@@ -4,6 +4,11 @@ from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from database import get_db
 from collect import Base
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi import Request
+
 
 
 from database import engine
@@ -22,17 +27,19 @@ app.add_middleware(
 # This line creates all tables from your models
 Base.metadata.create_all(bind=engine)
 
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the collection app"}
+@app.get("/", response_class=HTMLResponse)
+def serve_index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
 
-#@app.get("/members")
-#def get_items(db: Session = Depends(get_db)):
- #   return db.query(Member).all()  # Replace Item with your actual model
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
+
+
 
 class memberCreate(BaseModel):
     name: str
