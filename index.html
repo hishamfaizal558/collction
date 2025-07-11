@@ -1,0 +1,50 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Collection</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class ="collect">
+    <h1>Monthly Collection</h1>
+    <form id="memberForm">
+        <label>
+            Name:
+             <input type="text" id="name" placeholder="User Name" required>
+        </label>
+        <label>
+            Phone: 
+            <input type="text" id="phone" placeholder="Number" required>
+        </label>
+        <label>
+            Payment:
+             <input type="text" id="payment_status" placeholder="Amount" required>
+        </label>
+        <button type="submit">Add Member</button>
+    </form>
+
+    <p class="details"><a href="details.html">Members</a></p>
+    </div>
+    <script>
+        document.getElementById('memberForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const payment_status = document.getElementById('payment_status').value;
+
+            fetch('http://127.0.0.1:8000/members', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, phone, payment_status })
+            })
+            .then(res => res.json())
+            .then(data => {
+                this.reset();
+                alert("Member added!");
+            });
+        });
+    </script>
+</body>
+</html>
