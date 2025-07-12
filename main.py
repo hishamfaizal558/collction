@@ -35,7 +35,7 @@ def serve_index(request: Request):
 def health_check():
     return {"status": "ok"}
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+#app.mount("c/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 
