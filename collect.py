@@ -10,5 +10,5 @@ class Member(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
-    phone = Column(Integer)
+    phone = Column(String)
     payment_status = Column(Integer)
