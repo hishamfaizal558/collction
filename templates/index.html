@@ -1,49 +1,65 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Member Collection</title>
-    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class ="collect">
-    <h1>Monthly Collection</h1>
-    <form id="memberForm">
+    <h1>Add Member</h1>
+
+    <!-- 🟢 Form with IDs (used in JS to collect values) -->
+    <form id="memberForm"> <!-- ✅ added id for JavaScript to hook into -->
         <label>
             Name:
-             <input type="text" id="name" placeholder="User Name" required>
-        </label>
+            <input type="text" id="name" required> <!-- ✅ added id -->
+        </label><br>
         <label>
-            Phone: 
-            <input type="text" id="phone" placeholder="Number" required>
-        </label>
+            Phone:
+            <input type="text" id="phone" required> <!-- ✅ added id -->
+        </label><br>
         <label>
-            Payment:
-             <input type="text" id="payment_status" placeholder="Amount" required>
-        </label>
+            Payment Status:
+            <input type="number" id="payment_status" required> <!-- ✅ added id -->
+        </label><br>
         <button type="submit">Add Member</button>
     </form>
 
-    <p class="details"><a href="details.html">Members</a></p>
-    </div>
-    <script>
-        document.getElementById('memberForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const payment_status = document.getElementById('payment_status').value;
+    <!-- 🟢 Response placeholder -->
+    <div id="responseBox" style="margin-top: 20px;"></div> <!-- ✅ added response box -->
 
-            fetch('http://127.0.0.1:8000/members', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, phone, payment_status })
-            })
-            .then(res => res.json())
-            .then(data => {
-                this.reset();
-                alert("Member added!");
-            });
+    <!-- 🟢 JavaScript that sends JSON to FastAPI -->
+    <script>
+        // ✅ Added JS code to handle form submit without reloading
+        document.getElementById("memberForm").addEventListener("submit", async function(e) {
+            e.preventDefault();  // ✅ Prevent form from reloading page
+
+            // ✅ Collect values from input fields
+            const name = document.getElementById("name").value;
+            const phone = parseInt(document.getElementById("phone").value);
+            const payment_status = parseInt(document.getElementById("payment_status").value);
+
+            const responseBox = document.getElementById("responseBox");
+
+            try {
+                // ✅ Send JSON via fetch to your FastAPI backend
+                const res = await fetch("/members", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ name, phone, payment_status }) // ✅ Send as JSON
+                });
+
+                if (!res.ok) {
+                    const error = await res.json();
+                    responseBox.innerText = "Error: " + JSON.stringify(error); // ✅ Show error
+                } else {
+                    const data = await res.json();
+                    responseBox.innerText = "✅ Member added: " + JSON.stringify(data); // ✅ Show success
+                }
+            } catch (err) {
+                responseBox.innerText = "❌ Network or server error."; // ✅ Handle network error
+            }
         });
     </script>
 </body>
