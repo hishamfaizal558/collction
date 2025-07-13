@@ -43,7 +43,7 @@ templates = Jinja2Templates(directory="templates")
 
 class memberCreate(BaseModel):
     name: str
-    phone: int
+    phone: str
     payment_status: int
 
 @app.get("/members")
