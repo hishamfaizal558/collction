@@ -43,7 +43,7 @@ templates = Jinja2Templates(directory="templates")
 
 class memberCreate(BaseModel):
     name: str
-    phone: int
+    phone: str
     payment_status: int
 
 @app.get("/members")
@@ -53,6 +53,7 @@ def get_members(db: Session = Depends(get_db)):
 
 @app.post("/members")
 def create_member(member: memberCreate, db: Session = Depends(get_db)):
+    phone = str(member.phone)
     db_member = db.query(Member).filter(Member.name == member.name, Member.phone == member.phone).first()
     if db_member:
         db_member.payment_status += member.payment_status
