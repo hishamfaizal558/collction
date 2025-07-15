@@ -7,19 +7,18 @@
 <body>
     <h1>Add Member</h1>
 
-    <!-- 🟢 Form with IDs (used in JS to collect values) -->
-    <form id="memberForm"> <!-- ✅ added id for JavaScript to hook into -->
+    
         <label>
             Name:
-            <input type="text" id="name" required> <!-- ✅ added id -->
+            <input type="text" id="name" required> 
         </label><br>
         <label>
             Phone:
-            <input type="text" id="phone" required> <!-- ✅ added id -->
+            <input type="text" id="phone" required> 
         </label><br>
         <label>
             Payment Status:
-            <input type="number" id="payment_status" required> <!-- ✅ added id -->
+            <input type="number" id="payment_status" required> 
         </label><br>
         <button type="submit">Add Member</button>
     </form>
@@ -29,7 +28,7 @@
 
     <!-- 🟢 JavaScript that sends JSON to FastAPI -->
     <script>
-        // ✅ Added JS code to handle form submit without reloading
+    
         document.getElementById("memberForm").addEventListener("submit", async function(e) {
             e.preventDefault();  // ✅ Prevent form from reloading page
 
@@ -41,7 +40,7 @@
             const responseBox = document.getElementById("responseBox");
 
             try {
-                // ✅ Send JSON via fetch to your FastAPI backend
+                
                 const res = await fetch("/members", {
                     method: "POST",
                     headers: {
