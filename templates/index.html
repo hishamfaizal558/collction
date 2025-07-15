@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Member Collection</title>
+    
 </head>
 <body>
     <h1>Add Member</h1>
@@ -23,10 +25,10 @@
         <button type="submit">Add Member</button>
     </form>
 
-    <!-- 🟢 Response placeholder -->
-    <div id="responseBox" style="margin-top: 20px;"></div> <!-- ✅ added response box -->
+    
+    <div id="responseBox" style="margin-top: 20px;"></div> 
 
-    <!-- 🟢 JavaScript that sends JSON to FastAPI -->
+    
     <script>
     
         document.getElementById("memberForm").addEventListener("submit", async function(e) {
@@ -46,18 +48,18 @@
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({ name, phone, payment_status }) // ✅ Send as JSON
+                    body: JSON.stringify({ name, phone, payment_status }) 
                 });
 
                 if (!res.ok) {
                     const error = await res.json();
-                    responseBox.innerText = "Error: " + JSON.stringify(error); // ✅ Show error
+                    responseBox.innerText = "Error: " + JSON.stringify(error); 
                 } else {
                     const data = await res.json();
-                    responseBox.innerText = "✅ Member added: " + JSON.stringify(data); // ✅ Show success
+                    responseBox.innerText = "✅ Member added: " + JSON.stringify(data); 
                 }
             } catch (err) {
-                responseBox.innerText = "❌ Network or server error."; // ✅ Handle network error
+                responseBox.innerText = "❌ Network or server error."; 
             }
         });
     </script>
